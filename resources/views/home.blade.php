@@ -1,17 +1,15 @@
-@extends('app')
+@extends('layouts.master')
 
 @section('content')
-<div class="container">
-	<div class="row">
-		<div class="col-md-10 col-md-offset-1">
-			<div class="panel panel-default">
-				<div class="panel-heading">Home</div>
 
-				<div class="panel-body">
-					You are logged in!
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
+    {{Form::open(['route' => 'shoot.store','class' => 'form-inline'])}}
+
+    <div class="form-group">
+        {{Form::label('Magnet URL')}}
+        {{Form::text('magnet',null, ['class' => 'form-control'])}}
+    </div>
+    <div class="form-group">
+        {{Form::submit('Shoot', ['class' => 'btn btn-default'])}}
+    </div>
+    {{Form::close()}}
 @endsection

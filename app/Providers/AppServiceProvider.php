@@ -11,7 +11,8 @@ class AppServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-		//
+		// Set blade tags
+		\Blade::setRawTags("{{", "}}");
 	}
 
 	/**
