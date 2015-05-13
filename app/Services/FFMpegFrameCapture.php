@@ -11,6 +11,7 @@ class FFMpegFrameCapture implements FrameCapture
 {
     private $source;
     private $timecodes;
+    private $ffmpeg;
 
     /**
      * FFMpegFrameCapture constructor.
@@ -18,8 +19,8 @@ class FFMpegFrameCapture implements FrameCapture
     public function __construct()
     {
         $this->ffmpeg = FFMpeg::create([
-            'ffmpeg.binaries' => '/var/www/torshot/ffmpeg/ffprobe',
-            'ffprobe.binaries' => '/var/www/torshot/ffmpeg/ffprobe',
+            'ffmpeg.binaries'  => \Config::get('torshot.ffmpeg_binaries'),
+            'ffprobe.binaries' => \Config::get('torshot.ffprobe_binaries'),
         ]);
     }
 
@@ -43,12 +44,15 @@ class FFMpegFrameCapture implements FrameCapture
      * @param array $timecodes locations in time at which the frames should be extracted
      * @return $this
      */
-    public function setTime(array $timecodes)
+    public function setTimecodes(array $timecodes)
     {
         $this->timecodes = $timecodes;
     }
 
-    public function getTime()
+    /**
+     * @return array|\FFMpeg\Coordinate\TimeCode an array of timecodes which can be read by FFMpeg
+     */
+    public function getTimecodes()
     {
         return $this->timecodes;
     }
@@ -56,16 +60,24 @@ class FFMpegFrameCapture implements FrameCapture
     /**
      * Capture the frames and save them
      * @param string $location the path to the folder where the frames should be saved
-     * @return mixed
+     * @param array $params Not used yet. For future filename prefixes etc.
+     * @return array the paths to the location of the screenshots
      */
-    public function extract($location)
+    public function extract($location, $params = array())
     {
-        // TODO: Implement extract() method.
+        $filenames = []; // create empty array
+        foreach ($this->timecodes as $key => $timecode) {
+            $filenames[$key] = $location . '/' . md5(time()) . $key . '.png';
+            $this->ffmpeg->open($this->getSource())
+                ->frame($timecode)
+                ->save($filenames[$key]);
+        }
+        return $filenames;
     }
 
     /**
      * @param string|array $time the time in HH:MM:SS format
-     * @param string       $amount the amount of frames to be extracted. This value takes precedence over the time
+     * @param string $amount the amount of frames to be extracted. This value takes precedence over the time
      *     variable
      * @return mixed
      */

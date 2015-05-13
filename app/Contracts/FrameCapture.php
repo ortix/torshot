@@ -18,7 +18,7 @@ interface FrameCapture
      * @return $this
      * @internal param array $timecode
      */
-    public function setTime(array $timecodes);
+    public function setTimecodes(array $timecodes);
 
     /**
      * Capture the frames and save them
