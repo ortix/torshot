@@ -33,4 +33,10 @@ interface TorrentStreamer
      */
     public function run();
 
+    /**
+     *
+     * @return void
+     */
+    public function kill();
+
 }

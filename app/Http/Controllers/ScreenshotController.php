@@ -32,11 +32,17 @@ class ScreenshotController extends Controller
     /**
      * Store a newly created resource in storage.
      *
+     * @param Request $request
      * @return Response
      */
-    public function store()
+    public function store(Request $request)
     {
-        $this->dispatch(new CaptureFramesCommand('magnet url', 'timecode', 5));
+        $data = $request->all();
+        return $this->dispatch(new CaptureFramesCommand(
+            $data['magnet_url'],
+            $data['time'],
+            $data['amount'] // amount has precedence over time
+        ));
     }
 
     /**

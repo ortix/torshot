@@ -30,6 +30,9 @@ class AppServiceProvider extends ServiceProvider {
 			'Illuminate\Contracts\Auth\Registrar',
 			'App\Services\Registrar'
 		);
+        //TODO: This apparently doesn't work..
+//		$this->app->bind('App\Contracts\FrameCapture','App\Services\FFMpegFrameCapture');
+//		$this->app->bind('App\Contracts\TorrentStreamer','App\Services\PeerflixStreamer');
 	}
 
 }

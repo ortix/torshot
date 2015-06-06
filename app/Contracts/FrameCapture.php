@@ -16,7 +16,6 @@ interface FrameCapture
     /**
      * @param array $timecodes locations in time at which the frames should be extracted
      * @return $this
-     * @internal param array $timecode
      */
     public function setTimecodes(array $timecodes);
 

@@ -1,6 +1,6 @@
 <?php namespace App\Commands;
 
-class CaptureFramesCommand extends Command
+class CaptureFramesCommand
 {
 
     /**

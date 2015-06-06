@@ -7,7 +7,7 @@ class FFMpegFrameCaptureTest extends TestCase
 
     public function setUp()
     {
-        $this->location = base_path() . '/tmp';
+        $this->location =   '/var/www/torshot/tmp';
         parent::setUp();
     }
 
@@ -20,18 +20,6 @@ class FFMpegFrameCaptureTest extends TestCase
         parent::tearDown();
     }
 
-    /**
-     * A basic functional test example.
-     *
-     * @return void
-     */
-    public function testBasicExample()
-    {
-        $response = $this->call('GET', '/');
-        $this->assertEquals(200, $response->getStatusCode());
-
-    }
-
     public function testExtract()
     {
         $capture = new \App\Services\FFMpegFrameCapture();
@@ -40,7 +28,7 @@ class FFMpegFrameCaptureTest extends TestCase
         $amount = 3;
 
         $capture->setSource($source);
-        $timecodes = $capture->makeTimecodes(null, $amount);
+        $timecodes = $capture->timecodesFromAmount($amount);
         $capture->setTimecodes($timecodes);
         $files = $capture->extract($location);
 
@@ -59,7 +47,7 @@ class FFMpegFrameCaptureTest extends TestCase
         $this->assertEquals($capture->getSource(), $source);
 
         $amount = 4;
-        $timecodes = $capture->makeTimecodes(null, $amount);
+        $timecodes = $capture->timecodesFromAmount($amount);
         $this->assertContainsOnlyInstancesOf('FFMpeg\Coordinate\TimeCode', $timecodes);
     }
 }

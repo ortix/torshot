@@ -19,7 +19,7 @@ class FFMpegFrameCapture implements FrameCapture
     public function __construct()
     {
         $this->ffmpeg = FFMpeg::create([
-            'ffmpeg.binaries'  => \Config::get('torshot.ffmpeg_binaries'),
+            'ffmpeg.binaries' => \Config::get('torshot.ffmpeg_binaries'),
             'ffprobe.binaries' => \Config::get('torshot.ffprobe_binaries'),
         ]);
     }
@@ -47,6 +47,7 @@ class FFMpegFrameCapture implements FrameCapture
     public function setTimecodes(array $timecodes)
     {
         $this->timecodes = $timecodes;
+        return $this;
     }
 
     /**
@@ -60,7 +61,7 @@ class FFMpegFrameCapture implements FrameCapture
     /**
      * Capture the frames and save them
      * @param string $location the path to the folder where the frames should be saved
-     * @param array $params Not used yet. For future filename prefixes etc.
+     * @param array  $params Not used yet. For future filename prefixes etc.
      * @return array the paths to the location of the screenshots
      */
     public function extract($location, $params = array())
@@ -73,21 +74,6 @@ class FFMpegFrameCapture implements FrameCapture
                 ->save($filenames[$key]);
         }
         return $filenames;
-    }
-
-    /**
-     * @param string|array $time the time in HH:MM:SS format
-     * @param string $amount the amount of frames to be extracted. This value takes precedence over the time
-     *     variable
-     * @return mixed
-     */
-    public function makeTimecodes($time, $amount)
-    {
-        if ($amount) {
-            return $this->timecodesFromAmount($amount);
-        }
-
-        return $this->timecodesFromTime($time);
     }
 
     /**
@@ -105,7 +91,7 @@ class FFMpegFrameCapture implements FrameCapture
      * @param $amount
      * @return array
      */
-    private function timecodesFromAmount($amount)
+    public function timecodesFromAmount($amount)
     {
         $duration = $this->getDuration();
         $frames = range(1, $amount);
@@ -121,7 +107,7 @@ class FFMpegFrameCapture implements FrameCapture
      * @param $time
      * @return TimeCode
      */
-    private function timecodesFromTime($time)
+    public function timecodesFromTime($time)
     {
         return TimeCode::fromString($time);
 
