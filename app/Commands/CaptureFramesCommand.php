@@ -1,6 +1,8 @@
 <?php namespace App\Commands;
 
-class CaptureFramesCommand
+use Illuminate\Contracts\Queue\ShouldQueue;
+
+class CaptureFramesCommand implements ShouldQueue
 {
 
     /**

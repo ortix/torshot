@@ -2,8 +2,6 @@
 
 use App\Commands\CaptureFramesCommand;
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
-
 use Illuminate\Http\Request;
 
 class ScreenshotController extends Controller
@@ -16,7 +14,7 @@ class ScreenshotController extends Controller
      */
     public function index()
     {
-        //
+        return "Hello World";
     }
 
     /**

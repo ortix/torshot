@@ -3,13 +3,9 @@
 namespace App\Handlers\Commands;
 
 use App\Commands\CaptureFramesCommand;
-use app\Contracts\FrameCapture;
-use App\Contracts\TorrentStreamer;
-use App\Events\FramesCaptured;
 use App\Services\FFMpegFrameCapture;
 use App\Services\LocalStreamer;
 use App\Services\PeerflixStreamer;
-use FFMpeg\Coordinate\TimeCode;
 use Config;
 
 class CaptureFramesCommandHandler
@@ -21,7 +17,7 @@ class CaptureFramesCommandHandler
     /**
      * CaptureFramesHandler constructor.
      * @param FFMpegFrameCapture $capture
-     * @param PeerflixStreamer   $peerflix
+     * @param PeerflixStreamer $peerflix
      */
     public function __construct(FFMpegFrameCapture $capture, LocalStreamer $peerflix)
     {
@@ -50,12 +46,10 @@ class CaptureFramesCommandHandler
         }
 
         // Extract the frames with ffmpeg
-        $filenames = $this->capture->setTimecodes($timecodes)->extract(base_path() . '/tmp');
+        $filenames = $this->capture->setTimecodes($timecodes)->extract(public_path() . '/tmp');
 
         // Kill peerflix when we're done
         $this->peerflix->kill();
-
-        event(new FramesCaptured($filenames));
 
         return $filenames;
     }

@@ -3,8 +3,9 @@
 namespace App\Services;
 
 use App\Contracts\FrameCapture;
-use FFMpeg\FFMpeg;
+use App\Events\SingleFrameCaptured;
 use FFMpeg\Coordinate\TimeCode;
+use FFMpeg\FFMpeg;
 
 
 class FFMpegFrameCapture implements FrameCapture
@@ -24,20 +25,12 @@ class FFMpegFrameCapture implements FrameCapture
         ]);
     }
 
-
     /**
-     * Set the source location of the video from where the frame should be extracted
-     * @param $path
-     * @return $this
+     * @return array|\FFMpeg\Coordinate\TimeCode an array of timecodes which can be read by FFMpeg
      */
-    public function setSource($path)
+    public function getTimecodes()
     {
-        $this->source = $path;
-    }
-
-    public function getSource()
-    {
-        return $this->source;
+        return $this->timecodes;
     }
 
     /**
@@ -51,17 +44,9 @@ class FFMpegFrameCapture implements FrameCapture
     }
 
     /**
-     * @return array|\FFMpeg\Coordinate\TimeCode an array of timecodes which can be read by FFMpeg
-     */
-    public function getTimecodes()
-    {
-        return $this->timecodes;
-    }
-
-    /**
      * Capture the frames and save them
      * @param string $location the path to the folder where the frames should be saved
-     * @param array  $params Not used yet. For future filename prefixes etc.
+     * @param array $params Not used yet. For future filename prefixes etc.
      * @return array the paths to the location of the screenshots
      */
     public function extract($location, $params = array())
@@ -72,18 +57,26 @@ class FFMpegFrameCapture implements FrameCapture
             $this->ffmpeg->open($this->getSource())
                 ->frame($timecode)
                 ->save($filenames[$key]);
+
+            // Immediately notify the user that a frame has been captured
+            event(new SingleFrameCaptured($filenames[$key]));
         }
         return $filenames;
     }
 
-    /**
-     * @return int the duration of the video in seconds
-     */
-    private function getDuration()
+    public function getSource()
     {
-        return (int)$this->ffmpeg->getFFProbe()
-            ->format($this->getSource())
-            ->get('duration');
+        return $this->source;
+    }
+
+    /**
+     * Set the source location of the video from where the frame should be extracted
+     * @param $path
+     * @return $this
+     */
+    public function setSource($path)
+    {
+        $this->source = $path;
     }
 
     /**
@@ -100,6 +93,16 @@ class FFMpegFrameCapture implements FrameCapture
             $seconds[] = TimeCode::fromSeconds($duration * ($frame) / ($amount + 1));
         }
         return $seconds;
+    }
+
+    /**
+     * @return int the duration of the video in seconds
+     */
+    private function getDuration()
+    {
+        return (int)$this->ffmpeg->getFFProbe()
+            ->format($this->getSource())
+            ->get('duration');
     }
 
     /**

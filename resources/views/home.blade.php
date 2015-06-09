@@ -29,8 +29,8 @@
 
         var pusher = new Pusher('b747881bbf8da0631272');
         var channel = pusher.subscribe('test_channel');
-        channel.bind('App\\Events\\FramesCaptured', function (data) {
-            $('body').append('<img src="' + data.filenames[0] + '" />');
+        channel.bind('App\\Events\\SingleFrameCaptured', function (data) {
+            $('body').append('<img style="width:200px" src="' + data.filename + '" />');
         });
     </script>
 @endsection

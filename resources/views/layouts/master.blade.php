@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" href="{{asset('/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{asset('/assets/css/bootstrap.min.css')}}">
     <style>
         body {
             padding-top: 50px;
@@ -58,8 +58,8 @@
 </div>
 
 <!-- /container -->
-<script src="{{asset('/js/vendor/jquery-1.11.2.min.js')}}"></script>
-<script src="{{asset('/js/vendor/bootstrap.min.js')}}"></script>
+<script src="{{asset('/assets/js/vendor/jquery-1.11.2.min.js')}}"></script>
+<script src="{{asset('/assets/js/vendor/bootstrap.min.js')}}"></script>
 @yield('footer_scripts')
 
 </body>

@@ -2,9 +2,7 @@
 
 namespace App\Handlers\Events;
 
-use App\Events\FramesCaptured;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
+use App\Events\SingleFrameCaptured;
 
 class PushFramesToUser
 {
@@ -21,10 +19,9 @@ class PushFramesToUser
     /**
      * Handle the event.
      *
-     * @param  FramesCaptured  $event
-     * @return void
+     * @param SingleFrameCaptured $event
      */
-    public function handle(FramesCaptured $event)
+    public function handle(SingleFrameCaptured $event)
     {
 
     }

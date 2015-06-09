@@ -1,0 +1,10 @@
+{
+  "name": "Torshot",
+  "dependencies": {
+    "angular": "~1.4.0",
+    "bootstrap": "~3.3.4",
+    "jquery": "~2.1.4",
+    "vue": "~0.11.10",
+    "vue-resource": "~0.1.1"
+  }
+}
