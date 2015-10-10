@@ -36,11 +36,13 @@ class ScreenshotController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        return $this->dispatch(new CaptureFramesCommand(
+        $this->dispatch(new CaptureFramesCommand(
             $data['magnet_url'],
             $data['time'],
             $data['amount'] // amount has precedence over time
         ));
+
+        return response()->json(['msg' => 'OK']);
     }
 
     /**

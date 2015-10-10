@@ -69,7 +69,7 @@ class PeerflixStreamer implements TorrentStreamer
         $status = false;
         while ($status != 200) {
             try {
-                $status = $this->guzzle->head($this->getServerLocation())->send()->getStatusCode();
+                $status = $this->guzzle->head($this->getServerLocation())->getStatusCode();
             } catch (\Exception $e) {
                 // echo what's wrong and sleep
                 echo $e->getMessage() . "\n";
@@ -82,11 +82,11 @@ class PeerflixStreamer implements TorrentStreamer
      * Build the command and start the peerflix server
      * @return int $pid the process ID of peerflix
      */
-    private function startPeerflix()
+    public function startPeerflix()
     {
         $shell = new Exec();
         $command = new CommandBuilder('node');
-        $command->addSubCommand(base_path() . '/node/peerflix/app.js')
+        $command->addSubCommand(base_path() . '/node_modules/peerflix/app.js')
             ->addParam($this->torrent)
             ->addArgument('hostname', $this->hostname)
             ->addArgument('port', $this->port)

@@ -1,24 +1,34 @@
 @extends('layouts.master')
 
 @section('content')
+    <div class="container">
+        {{Form::open(['route' => 'shoot.store','class' => 'form-inline', 'id' => 'torshot-form'])}}
 
-    {{Form::open(['route' => 'shoot.store','class' => 'form-inline'])}}
-
-    <div class="form-group">
-        {{Form::label('Magnet URL')}}
-        {{Form::text('magnet_url', null, ['class' => 'form-control'])}}
-        {{Form::text('time', null, ['class' => 'form-control'])}}
-        {{Form::selectRange('amount', '1', \Config::get('torshot.max_amount'))}}
+        <div class="form-group">
+            {{Form::label('Magnet URL')}}
+            {{Form::text('magnet_url', null, ['class' => 'form-control'])}}
+            {{Form::text('time', null, ['class' => 'form-control'])}}
+            {{Form::selectRange('amount', '0', \Config::get('torshot.max_amount'))}}
+        </div>
+        <div class="form-group">
+            {{Form::submit('Shoot', ['class' => 'btn btn-default'])}}
+        </div>
+        {{Form::close()}}
     </div>
-    <div class="form-group">
-        {{Form::submit('Shoot', ['class' => 'btn btn-default'])}}
-    </div>
-    {{Form::close()}}
 
 @endsection
 
 @section('footer_scripts')
     <script src="//js.pusher.com/2.2/pusher.min.js"></script>
+
+    <script>
+        $('#torshot-form').submit(function (event) {
+            event.preventDefault();
+            $.post('shoot', $(this).serialize());
+        })
+    </script>
+
+
     <script>
         // Enable pusher logging - don't include this in production
         Pusher.log = function (message) {

@@ -20,7 +20,7 @@ class FFMpegFrameCapture implements FrameCapture
     public function __construct()
     {
         $this->ffmpeg = FFMpeg::create([
-            'ffmpeg.binaries' => \Config::get('torshot.ffmpeg_binaries'),
+            'ffmpeg.binaries'  => \Config::get('torshot.ffmpeg_binaries'),
             'ffprobe.binaries' => \Config::get('torshot.ffprobe_binaries'),
         ]);
     }
