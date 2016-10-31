@@ -1,10 +1,16 @@
-Vue.component('frame', {
-    template: '#frame-container'
+Vue.component('torshot-frame', {
+    template: '#frame-template',
+    props: ['frame'],
+    data: function () {
+        return {
+            frames: [
+                {src: 'http://placehold.it/400'},
+                {src: 'http://placehold.it/400'}
+            ]
+        }
+    }
 });
 
-var v = new Vue({
-    el: '#example-1',
-    data: {
-        counter: 0
-    }
-})
+new Vue( {
+    el: '#app'
+});

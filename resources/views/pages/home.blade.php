@@ -16,10 +16,13 @@
         </div>
         <button class="btn btn-default">Shoot</button>
     </form>
+    <div id="app">
+        <torshot-frame :frame="frames"></torshot-frame>
+    </div>
 
-    <template>
-        <div id="frame-container">
-            <img src="@{{source}}" class="img-thumbnail" width="400px"/>
+    <template id="frame-template">
+        <div>
+            @{{frame.src}}
         </div>
     </template>
 @endsection
