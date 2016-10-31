@@ -1,21 +1,27 @@
 @extends('master')
 
 @section('content')
-    <div class="container">
-        {{Form::open(['route' => 'shoot.store','class' => 'form-inline', 'id' => 'torshot-form'])}}
-
+    <form class="form-inline" id="torshot-form">
         <div class="form-group">
-            {{Form::label('Magnet URL')}}
-            {{Form::text('magnet_url', null, ['class' => 'form-control'])}}
-            {{Form::text('time', null, ['class' => 'form-control'])}}
-            {{Form::selectRange('amount', '0', \Config::get('torshot.max_amount'))}}
+            <label for="magnet_url">Magnet URL</label>
+            <input type="text" name="magnet_url" class="form-control" id="magnet_url">
         </div>
         <div class="form-group">
-            {{Form::submit('Shoot', ['class' => 'btn btn-default'])}}
+            <label for="time">Time</label>
+            <input type="text" name="time" class="form-control" id="time" placeholder="00:01:00">
         </div>
-        {{Form::close()}}
-    </div>
+        <div class="form-group">
+            <label for="amount">Amount</label>
+            <input type="number" name="amount" class="form-control" id="amount" min="0" max="10">
+        </div>
+        <button class="btn btn-default">Shoot</button>
+    </form>
 
+    <template>
+        <div id="frame-container">
+            <img src="@{{source}}" class="img-thumbnail" width="400px"/>
+        </div>
+    </template>
 @endsection
 
 @section('footer_scripts')
@@ -24,7 +30,10 @@
     <script>
         $('#torshot-form').submit(function (event) {
             event.preventDefault();
-            $.post('shoot', $(this).serialize());
+            $.post('/api/frame', $(this).serialize(), function (data, status) {
+                console.log(data);
+                console.log(status);
+            });
         })
     </script>
 

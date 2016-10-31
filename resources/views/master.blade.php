@@ -58,10 +58,11 @@
 </div>
 
 <!-- /container -->
-<script src="{{asset('/assets/js/vendor/jquery-1.11.2.min.js')}}"></script>
-<script src="{{asset('/assets/js/vendor/bootstrap.min.js')}}"></script>
-<script src="{{asset('/assets/js/vendor/vue.min.js')}}"></script>
-<script src="{{asset('/assets/js/vendor/vue-resource.min.js')}}"></script>
+<script src="{{asset('/assets/js/jquery.min.js')}}"></script>
+<script src="{{asset('/assets/js/bootstrap.min.js')}}"></script>
+<script src="{{asset('/assets/js/vue.js')}}"></script>
+<script src="{{asset('/assets/js/vue-resource.js')}}"></script>
+<script src="{{asset('/assets/js/app.js')}}"></script>
 {{--<script src="{{asset('/assets/js/scripts.js')}}"></script>--}}
 @yield('footer_scripts')
 

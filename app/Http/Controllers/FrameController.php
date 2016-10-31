@@ -14,7 +14,7 @@ class FrameController extends Controller
      * FrameController constructor.
      * @param FrameGrabber $grabber
      */
-    public function __construct(FrameGrabber $grabber)
+    public function __construct()
     {
 
     }
@@ -48,7 +48,8 @@ class FrameController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+        $this->dispatch(new CaptureFrame($request->all()));
+        return response('Request OK');
     }
 
     /**
