@@ -1,16 +1,13 @@
-Vue.component('torshot-frame', {
-    template: '#frame-template',
-    props: ['frame'],
-    data: function () {
-        return {
-            frames: [
-                {src: 'http://placehold.it/400'},
-                {src: 'http://placehold.it/400'}
-            ]
-        }
+Vue.component('torshot-frames', {
+    template: '#frames-template',
+})
+new Vue({
+    el: '#torshot-frames-container',
+    data: {
+        frames: [
+            'http://placehold.it/400',
+            'http://placehold.it/400',
+            'http://placehold.it/400'
+        ]
     }
-});
-
-new Vue( {
-    el: '#app'
-});
+})

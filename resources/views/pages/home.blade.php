@@ -16,14 +16,12 @@
         </div>
         <button class="btn btn-default">Shoot</button>
     </form>
-    <div id="app">
-        <torshot-frame :frame="frames"></torshot-frame>
+    <div id="torshot-frames-container">
+        <img is="torshot-frames" v-for="(frame, index) in frames" v-bind:src="frame"/>
     </div>
 
-    <template id="frame-template">
-        <div>
-            @{{frame.src}}
-        </div>
+    <template id="frames-template">
+        <img class="img-thumbnail"/>
     </template>
 @endsection
 
